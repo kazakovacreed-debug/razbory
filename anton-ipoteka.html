@@ -1,0 +1,381 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Ипотечный калькулятор — Антон Махин, новостройки Казани</title>
+<meta name="description" content="Посчитайте ежемесячный платёж, переплату и нужный доход за 2 минуты. Бесплатная консультация по новостройкам Казани — Антон Махин.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
+<style>
+  :root {
+    --bg: #F8EEEB; --ink: #1C1B22; --muted: #7A7480; --navy: #0B0838; --red: #E0475B; --line: #EFE4E1; --orange: #F28C28; --violet: #6E2A9C;
+    --grad: linear-gradient(90deg, #F28C28, #E0475B 55%, #6E2A9C);
+    --title: linear-gradient(90deg, #0B0838 0%, #7A2390 45%, #E0565A 75%, #F2643A 100%);
+  }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Inter, system-ui, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.45; font-size: 16px;
+    background-image: radial-gradient(600px 400px at 100% 0%, rgba(178,140,220,.35), transparent 70%),
+      radial-gradient(500px 400px at 100% 100%, rgba(242,140,110,.28), transparent 70%),
+      radial-gradient(500px 400px at 0% 100%, rgba(178,140,220,.25), transparent 70%);
+    background-attachment: fixed; }
+  .wrap { max-width: 1040px; margin: 0 auto; padding: 32px 20px 48px; }
+  .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .pill-top { display: inline-block; background: var(--grad); color: #fff; font-weight: 800; font-size: 12px; letter-spacing: .12em;
+    padding: 7px 14px; border-radius: 99px; text-transform: uppercase; }
+  .logo { flex: none; width: 72px; height: 72px; border-radius: 50%; background: var(--navy); display: flex; align-items: center; justify-content: center; }
+  .logo span { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; font-size: 22px; font-weight: 900; }
+  h1 { font-weight: 900; font-size: clamp(34px, 7vw, 60px); line-height: .98; text-transform: uppercase; letter-spacing: -.02em;
+    margin: 14px 0 14px; background: var(--title); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  h2 { font-weight: 900; font-size: clamp(22px, 4vw, 32px); text-transform: uppercase; letter-spacing: -.01em; line-height: 1.05;
+    margin: 44px 0 6px; background: var(--title); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block; }
+  .lede { font-size: 18px; color: var(--muted); max-width: 720px; }
+  .lede b { color: var(--ink); }
+  .sub { color: var(--muted); margin-bottom: 18px; max-width: 760px; }
+  .card { background: #fff; border-radius: 26px; padding: 24px; box-shadow: 0 6px 24px rgba(60,20,60,.07); }
+
+  .calc { display: grid; grid-template-columns: 1.05fr 1fr; gap: 16px; margin-top: 26px; align-items: start; }
+  @media (max-width: 820px) { .calc { grid-template-columns: 1fr; } }
+
+  .field { margin-bottom: 22px; }
+  .field:last-child { margin-bottom: 0; }
+  .fhead { display: flex; justify-content: space-between; align-items: baseline; gap: 10px; margin-bottom: 8px; }
+  .fhead label { font-weight: 800; font-size: 14px; }
+  .fhead .hint { font-size: 12.5px; color: var(--muted); text-align: right; }
+  .inp { position: relative; }
+  .inp input[type=text] { width: 100%; border: 2px solid var(--line); border-radius: 16px; padding: 13px 52px 13px 16px; font: 800 20px Inter, sans-serif;
+    color: var(--ink); background: #FBF6F4; outline: none; font-variant-numeric: tabular-nums; transition: border-color .15s; }
+  .inp input[type=text]:focus { border-color: var(--red); background: #fff; }
+  .inp .unit { position: absolute; right: 16px; top: 50%; transform: translateY(-50%); color: var(--muted); font-weight: 700; }
+  input[type=range] { -webkit-appearance: none; appearance: none; width: 100%; height: 6px; border-radius: 6px; margin-top: 12px;
+    background: linear-gradient(90deg, #F28C28, #E0475B var(--p, 50%), #EFE4E1 var(--p, 50%)); outline: none; }
+  input[type=range]::-webkit-slider-thumb { -webkit-appearance: none; width: 22px; height: 22px; border-radius: 50%; background: #fff;
+    border: 5px solid var(--red); box-shadow: 0 2px 8px rgba(224,71,91,.35); cursor: pointer; }
+  input[type=range]::-moz-range-thumb { width: 14px; height: 14px; border-radius: 50%; background: #fff; border: 5px solid var(--red); cursor: pointer; }
+  .chips { display: flex; flex-wrap: wrap; gap: 8px; margin-top: 10px; }
+  .chip { border: 0; background: #F3ECEA; color: var(--ink); font: 700 13px Inter, sans-serif; padding: 8px 12px; border-radius: 99px; cursor: pointer; transition: all .15s; }
+  .chip:hover { background: #EADFDC; }
+  .chip.on { background: var(--navy); color: #fff; }
+  .chip small { font-weight: 600; opacity: .7; margin-left: 4px; }
+
+  .res { position: sticky; top: 16px; background: var(--navy); color: #fff; border-radius: 26px; padding: 26px; overflow: hidden; }
+  .res:before { content: ""; position: absolute; right: -80px; top: -80px; width: 240px; height: 240px; border-radius: 50%;
+    background: radial-gradient(circle, rgba(242,100,58,.45), transparent 70%); }
+  .res .lbl { font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #F2A06A; position: relative; }
+  .res .pay { font-weight: 900; font-size: clamp(38px, 6vw, 54px); line-height: 1.05; margin: 6px 0 2px; position: relative; font-variant-numeric: tabular-nums;
+    background: linear-gradient(90deg, #fff, #FFD6C2); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  .res .pay-sub { color: rgba(255,255,255,.65); font-size: 14px; position: relative; }
+  .kv { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-top: 20px; position: relative; }
+  .kv div { background: rgba(255,255,255,.07); border-radius: 16px; padding: 12px 14px; }
+  .kv span { display: block; font-size: 12px; color: rgba(255,255,255,.6); }
+  .kv b { font-size: 18px; font-weight: 800; font-variant-numeric: tabular-nums; }
+  .bar { display: flex; height: 12px; border-radius: 8px; overflow: hidden; margin: 20px 0 8px; position: relative; background: rgba(255,255,255,.1); }
+  .bar i { display: block; height: 100%; transition: width .3s; }
+  .bar .b1 { background: #fff; }
+  .bar .b2 { background: linear-gradient(90deg, #F28C28, #E0475B); }
+  .bar .b3 { background: #9C6BC4; }
+  .barlg { display: flex; flex-wrap: wrap; gap: 6px 14px; font-size: 12px; color: rgba(255,255,255,.7); position: relative; }
+  .barlg i { display: inline-block; width: 9px; height: 9px; border-radius: 3px; margin-right: 5px; }
+  .verdict { margin-top: 18px; padding: 12px 14px; border-radius: 16px; font-size: 14px; font-weight: 600; position: relative; background: rgba(255,255,255,.08); }
+  .verdict b { color: #F2A06A; }
+  .cta { display: flex; gap: 10px; flex-wrap: wrap; margin-top: 18px; position: relative; }
+  .btn { display: inline-flex; align-items: center; justify-content: center; gap: 8px; text-decoration: none; font: 800 14px Inter, sans-serif;
+    padding: 13px 18px; border-radius: 99px; transition: transform .15s; }
+  .btn:hover { transform: translateY(-1px); }
+  .btn.main { background: var(--grad); color: #fff; flex: 1 1 200px; }
+  .btn.ghost { background: rgba(255,255,255,.12); color: #fff; }
+  .btn.dark { background: var(--navy); color: #fff; }
+  .btn.light { background: #fff; color: var(--navy); }
+
+  .grid3 { display: grid; grid-template-columns: repeat(3, 1fr); gap: 16px; }
+  @media (max-width: 820px) { .grid3 { grid-template-columns: 1fr; } }
+  .tablewrap { overflow-x: auto; }
+  table { border-collapse: collapse; width: 100%; font-size: 15px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: right; padding: 12px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; }
+  th:first-child, td:first-child { text-align: left; }
+  th { color: var(--muted); font-weight: 700; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; }
+  tr.cur td { font-weight: 800; background: #FBF1EE; }
+  tr.cur td:first-child { border-radius: 12px 0 0 12px; } tr.cur td:last-child { border-radius: 0 12px 12px 0; }
+  .chart { position: relative; }
+  .chart svg { display: block; width: 100%; height: auto; }
+  .chart text { font: 12px Inter, sans-serif; fill: var(--muted); }
+  .tip { position: absolute; pointer-events: none; background: #fff; border-radius: 14px; box-shadow: 0 8px 28px rgba(60,20,60,.18);
+    padding: 10px 12px; font-size: 13px; white-space: nowrap; opacity: 0; transition: opacity .1s; font-variant-numeric: tabular-nums; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--muted); margin-bottom: 10px; }
+  .legend i { display: inline-block; width: 12px; height: 12px; border-radius: 4px; margin-right: 6px; vertical-align: -1px; }
+
+  .tips .num { flex: none; width: 34px; height: 34px; border-radius: 50%; background: var(--grad); color: #fff; font-weight: 900; display: flex; align-items: center; justify-content: center; }
+  .tips .card { display: flex; gap: 14px; align-items: flex-start; }
+  .tips b { display: block; margin-bottom: 4px; }
+  .tips p { color: var(--muted); font-size: 14.5px; }
+
+  .anton { margin-top: 44px; background: var(--navy); color: #fff; border-radius: 30px; padding: 32px; display: grid; grid-template-columns: auto 1fr; gap: 26px; align-items: center; position: relative; overflow: hidden; }
+  .anton:after { content: ""; position: absolute; left: -100px; bottom: -120px; width: 320px; height: 320px; border-radius: 50%; background: radial-gradient(circle, rgba(110,42,156,.55), transparent 70%); }
+  @media (max-width: 680px) { .anton { grid-template-columns: 1fr; padding: 26px; } }
+  .ava { width: 120px; height: 120px; border-radius: 50%; background: var(--grad); display: flex; align-items: center; justify-content: center;
+    font-weight: 900; font-size: 40px; color: #fff; box-shadow: 0 0 0 5px rgba(255,255,255,.12); position: relative; z-index: 1; }
+  .anton .who { font-size: 12px; font-weight: 800; letter-spacing: .12em; text-transform: uppercase; color: #F2A06A; }
+  .anton h3 { font-size: clamp(24px, 4vw, 34px); font-weight: 900; text-transform: uppercase; line-height: 1.05; margin: 6px 0 10px; }
+  .anton p { color: rgba(255,255,255,.75); max-width: 600px; }
+  .anton ul { list-style: none; margin: 14px 0 0; display: grid; grid-template-columns: 1fr 1fr; gap: 6px 18px; }
+  @media (max-width: 560px) { .anton ul { grid-template-columns: 1fr; } }
+  .anton li { padding-left: 22px; position: relative; font-size: 14.5px; color: rgba(255,255,255,.9); }
+  .anton li:before { content: "+"; position: absolute; left: 2px; top: -2px; color: #F2643A; font-weight: 900; font-size: 18px; }
+  .anton > div { position: relative; z-index: 1; }
+  .phone { font-size: 22px; font-weight: 900; margin-top: 16px; }
+  .phone a { color: #fff; text-decoration: none; }
+  .note { color: var(--muted); font-size: 12.5px; margin-top: 28px; max-width: 760px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <div class="top">
+    <span class="pill-top">Антон Махин · новостройки Казани</span>
+    <div class="logo"><span>АМ</span></div>
+  </div>
+  <h1>Ипотека: считаем честно</h1>
+  <p class="lede"><b>«А потяну ли я?»</b> Двигайте ползунки и сразу видите платёж, переплату и доход, при котором банк одобрит. Всё за 2 минуты, без регистрации.</p>
+
+  <div class="calc">
+    <div class="card" id="inputs">
+      <div class="field">
+        <div class="fhead"><label for="price">Стоимость квартиры</label><span class="hint">лучше реальную цену, а не «хотелку»</span></div>
+        <div class="inp"><input type="text" id="price" inputmode="numeric"><span class="unit">₽</span></div>
+        <input type="range" id="price-r" min="2000000" max="25000000" step="50000" aria-label="Стоимость квартиры">
+      </div>
+      <div class="field">
+        <div class="fhead"><label for="down">Первоначальный взнос</label><span class="hint" id="down-pct"></span></div>
+        <div class="inp"><input type="text" id="down" inputmode="numeric"><span class="unit">₽</span></div>
+        <input type="range" id="down-r" min="0" max="90" step="1" aria-label="Первоначальный взнос, %">
+        <div class="chips" id="down-chips">
+          <button class="chip" data-v="0">0%</button><button class="chip" data-v="10">10%</button><button class="chip" data-v="20">20%</button><button class="chip" data-v="30">30%</button><button class="chip" data-v="50">50%</button>
+        </div>
+      </div>
+      <div class="field">
+        <div class="fhead"><label for="term">Срок</label><span class="hint">сравните 20 и 10 лет</span></div>
+        <div class="inp"><input type="text" id="term" inputmode="numeric"><span class="unit">лет</span></div>
+        <input type="range" id="term-r" min="1" max="30" step="1" aria-label="Срок, лет">
+      </div>
+      <div class="field">
+        <div class="fhead"><label for="rate">Ставка</label><span class="hint">ставку банка уточните у Антона</span></div>
+        <div class="inp"><input type="text" id="rate" inputmode="decimal"><span class="unit">%</span></div>
+        <div class="chips" id="rate-chips">
+          <button class="chip" data-v="6">Семейная<small>6%</small></button>
+          <button class="chip" data-v="6" data-k="it">IT-ипотека<small>6%</small></button>
+          <button class="chip" data-v="2">Дальневосточная<small>2%</small></button>
+          <button class="chip" data-v="20">Рыночная<small>≈20%</small></button>
+        </div>
+      </div>
+    </div>
+
+    <div class="res" id="result">
+      <div class="lbl">Ежемесячный платёж</div>
+      <div class="pay" id="r-pay">—</div>
+      <div class="pay-sub" id="r-paysub"></div>
+      <div class="kv">
+        <div><span>Сумма кредита</span><b id="r-loan">—</b></div>
+        <div><span>Переплата банку</span><b id="r-over">—</b></div>
+        <div><span>Всего отдадите</span><b id="r-total">—</b></div>
+        <div><span>Нужный доход семьи</span><b id="r-income">—</b></div>
+      </div>
+      <div class="bar"><i class="b1" id="bar1"></i><i class="b2" id="bar2"></i><i class="b3" id="bar3"></i></div>
+      <div class="barlg"><span><i style="background:#fff"></i>Взнос</span><span><i style="background:#E0475B"></i>Кредит</span><span><i style="background:#9C6BC4"></i>Переплата</span></div>
+      <div class="verdict" id="r-verdict"></div>
+      <div class="cta">
+        <a class="btn main" href="https://t.me/AntonNovostroy1" target="_blank" rel="noopener">Подобрать квартиру под этот платёж</a>
+        <a class="btn ghost" href="tel:+79874079909">Позвонить</a>
+      </div>
+    </div>
+  </div>
+
+  <h2>Как меняется платёж от срока</h2>
+  <p class="sub">Та же квартира, тот же взнос и ставка. Короче срок — выше платёж, но в разы меньше переплата.</p>
+  <div class="card tablewrap">
+    <table>
+      <thead><tr><th>Срок</th><th>Платёж в месяц</th><th>Переплата</th><th>Нужный доход</th></tr></thead>
+      <tbody id="terms"></tbody>
+    </table>
+  </div>
+
+  <h2>Сколько остаётся должны банку</h2>
+  <p class="sub">Остаток долга по годам и сколько из ваших платежей уходит на проценты.</p>
+  <div class="card">
+    <div class="legend"><span><i style="background:linear-gradient(90deg,#F28C28,#E0475B)"></i>Остаток долга</span><span><i style="background:#9C6BC4"></i>Выплачено процентов</span></div>
+    <div class="chart" id="chart"></div>
+  </div>
+
+  <h2>На что смотреть</h2>
+  <div class="grid3 tips" style="margin-top:14px">
+    <div class="card"><div class="num">1</div><div><b>Платёж ≤ 50% дохода</b><p>Так считают банки. Комфортно — до 30–40%, чтобы оставалось на жизнь и подушку.</p></div></div>
+    <div class="card"><div class="num">2</div><div><b>Взнос от 20%</b><p>Больше банков одобрят, ставка и платёж ниже. Без взноса — смотрите рассрочку от застройщика.</p></div></div>
+    <div class="card"><div class="num">3</div><div><b>Переплата — цена комфорта</b><p>Длинный срок снижает платёж, но переплата растёт. Можно взять на 20 лет и гасить досрочно.</p></div></div>
+  </div>
+
+  <section class="anton">
+    <div class="ava">АМ</div>
+    <div>
+      <div class="who">Бесплатная консультация</div>
+      <h3>Антон Махин — эксперт по новостройкам Казани</h3>
+      <p>Подберу квартиру под ваш бюджет, сравню все ЖК и ипотеку в разных банках в одном месте. Для покупателя бесплатно — платит застройщик, на цену квартиры это не влияет.</p>
+      <ul>
+        <li>Одобрение ипотеки в нескольких банках</li>
+        <li>Акции, скидки и рассрочки застройщиков</li>
+        <li>Бронь и сопровождение сделки</li>
+        <li>Опыт с 2018 года, офис в Казани</li>
+      </ul>
+      <div class="phone"><a href="tel:+79874079909">8 987 407-99-09</a></div>
+      <div class="cta">
+        <a class="btn main" href="https://t.me/AntonNovostroy1" target="_blank" rel="noopener">Написать Антону</a>
+        <a class="btn light" href="https://t.me/anton_novostroy" target="_blank" rel="noopener">Канал о новостройках</a>
+      </div>
+    </div>
+  </section>
+
+  <p class="note">Расчёт примерный: аннуитетный платёж без страховки и комиссий. Нужный доход — из правила «платёж не больше 50% дохода». Ставки по программам указаны для ориентира, точные условия зависят от банка, застройщика и вашей ситуации — уточняйте на консультации.</p>
+</div>
+
+<script>
+const S = { price: 7000000, downPct: 20, term: 20, rate: 6 };
+const nf = new Intl.NumberFormat("ru-RU");
+const rub = (v) => nf.format(Math.round(v)) + " ₽";
+const num = (s) => Number(String(s).replace(/[^\d.,]/g, "").replace(",", ".")) || 0;
+const $ = (id) => document.getElementById(id);
+const yearsWord = (n) => { const a = n % 10, b = n % 100; return a === 1 && b !== 11 ? "год" : a >= 2 && a <= 4 && (b < 12 || b > 14) ? "года" : "лет"; };
+
+function annuity(loan, ratePct, years) {
+  const n = years * 12, i = ratePct / 100 / 12;
+  if (loan <= 0) return 0;
+  if (i === 0) return loan / n;
+  return loan * i / (1 - Math.pow(1 + i, -n));
+}
+function calc(price, downPct, years, rate) {
+  const down = price * downPct / 100, loan = Math.max(0, price - down);
+  const pay = annuity(loan, rate, years), total = pay * years * 12, over = Math.max(0, total - loan);
+  return { down, loan, pay, total, over, income: pay * 2 };
+}
+function setRange(r) { const p = (r.value - r.min) / (r.max - r.min) * 100; r.style.setProperty("--p", p + "%"); }
+
+function sync(from) {
+  S.price = Math.min(Math.max(S.price, 500000), 200000000);
+  S.downPct = Math.min(Math.max(S.downPct, 0), 95);
+  S.term = Math.min(Math.max(Math.round(S.term), 1), 35);
+  S.rate = Math.min(Math.max(S.rate, 0), 40);
+  if (from !== "price") $("price").value = nf.format(S.price);
+  if (from !== "down") $("down").value = nf.format(Math.round(S.price * S.downPct / 100));
+  if (from !== "term") $("term").value = S.term;
+  if (from !== "rate") $("rate").value = String(S.rate).replace(".", ",");
+  $("price-r").value = Math.min(S.price, 25000000); $("down-r").value = Math.min(S.downPct, 90); $("term-r").value = Math.min(S.term, 30);
+  ["price-r", "down-r", "term-r"].forEach((id) => setRange($(id)));
+  $("down-pct").textContent = Math.round(S.downPct) + "% от стоимости";
+  document.querySelectorAll("#down-chips .chip").forEach((c) => c.classList.toggle("on", Number(c.dataset.v) === Math.round(S.downPct)));
+  let rateMarked = false;
+  document.querySelectorAll("#rate-chips .chip").forEach((c) => { const on = !rateMarked && Number(c.dataset.v) === S.rate && c.classList.contains("sel"); c.classList.toggle("on", on); if (on) rateMarked = true; });
+  render();
+}
+
+function render() {
+  const r = calc(S.price, S.downPct, S.term, S.rate);
+  $("r-pay").textContent = rub(r.pay);
+  $("r-paysub").textContent = `на ${S.term} ${yearsWord(S.term)} под ${String(S.rate).replace(".", ",")}%`;
+  $("r-loan").textContent = rub(r.loan);
+  $("r-over").textContent = rub(r.over);
+  $("r-total").textContent = rub(r.total + r.down);
+  $("r-income").textContent = "от " + rub(r.income);
+  const all = r.down + r.loan + r.over || 1;
+  $("bar1").style.width = (r.down / all * 100) + "%";
+  $("bar2").style.width = (r.loan / all * 100) + "%";
+  $("bar3").style.width = (r.over / all * 100) + "%";
+  const ratio = r.loan ? r.over / r.loan : 0;
+  $("r-verdict").innerHTML = "";
+  const v = document.createElement("span");
+  if (S.downPct < 20 && S.downPct > 0) v.append("Взнос меньше 20% — одобрят не все банки. ", Object.assign(document.createElement("b"), { textContent: "Антон подберёт, где выгоднее." }));
+  else if (S.downPct === 0) v.append("Без взноса ипотеку дают редко — ", Object.assign(document.createElement("b"), { textContent: "спросите про рассрочку от застройщика." }));
+  else if (ratio > 1) v.append("Переплата больше самого кредита. ", Object.assign(document.createElement("b"), { textContent: "Попробуйте срок покороче или льготную программу." }));
+  else v.append("Хороший сценарий. ", Object.assign(document.createElement("b"), { textContent: "Узнайте, какие ЖК подходят под этот платёж." }));
+  $("r-verdict").appendChild(v);
+  renderTerms();
+  drawChart();
+}
+
+function renderTerms() {
+  const tb = $("terms"); tb.innerHTML = "";
+  const set = Array.from(new Set([10, 15, 20, 25, 30, S.term])).sort((a, b) => a - b);
+  set.forEach((y) => {
+    const r = calc(S.price, S.downPct, y, S.rate);
+    const tr = tb.insertRow(); if (y === S.term) tr.className = "cur";
+    [`${y} ${yearsWord(y)}`, rub(r.pay), rub(r.over), "от " + rub(r.income)].forEach((t) => { tr.insertCell().textContent = t; });
+  });
+}
+
+const NS = "http://www.w3.org/2000/svg";
+const el = (t, a = {}, txt) => { const e = document.createElementNS(NS, t); for (const k in a) e.setAttribute(k, a[k]); if (txt != null) e.textContent = txt; return e; };
+function short(v) { return v >= 1e6 ? (Math.round(v / 1e5) / 10).toString().replace(".", ",") + " млн" : v >= 1e3 ? Math.round(v / 1e3) + " тыс" : "0"; }
+
+function drawChart() {
+  const box = $("chart"); box.innerHTML = "";
+  const r = calc(S.price, S.downPct, S.term, S.rate);
+  const i = S.rate / 100 / 12;
+  const pts = [{ y: 0, bal: r.loan, int: 0 }];
+  let bal = r.loan, paidInt = 0;
+  for (let m = 1; m <= S.term * 12; m++) { const intm = bal * i; paidInt += intm; bal = Math.max(0, bal - (r.pay - intm)); if (m % 12 === 0) pts.push({ y: m / 12, bal, int: paidInt }); }
+  const W = Math.max(300, box.clientWidth), H = 280, m = { t: 14, r: 10, b: 28, l: 64 };
+  const max = Math.max(r.loan, paidInt, 1);
+  const x = (y) => m.l + (y / S.term) * (W - m.l - m.r);
+  const yy = (v) => H - m.b - (v / max) * (H - m.t - m.b);
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Остаток долга и выплаченные проценты по годам" });
+  box.appendChild(svg);
+  const defs = el("defs"), g = el("linearGradient", { id: "ga", x1: 0, y1: 0, x2: 0, y2: 1 });
+  g.append(el("stop", { offset: "0%", "stop-color": "#E0475B", "stop-opacity": .35 }), el("stop", { offset: "100%", "stop-color": "#F28C28", "stop-opacity": .05 }));
+  const gl = el("linearGradient", { id: "gl", x1: 0, y1: 0, x2: 1, y2: 0 });
+  gl.append(el("stop", { offset: "0%", "stop-color": "#F28C28" }), el("stop", { offset: "100%", "stop-color": "#E0475B" }));
+  defs.append(g, gl); svg.appendChild(defs);
+  for (let k = 0; k <= 4; k++) { const v = max * k / 4; svg.append(el("line", { x1: m.l, x2: W - m.r, y1: yy(v), y2: yy(v), stroke: "#EFE4E1" }), el("text", { x: m.l - 8, y: yy(v) + 4, "text-anchor": "end" }, short(v))); }
+  const stepY = S.term <= 10 ? 1 : S.term <= 20 ? 2 : 5;
+  pts.forEach((p) => { if (p.y % stepY === 0 || p.y === S.term) svg.append(el("text", { x: x(p.y), y: H - 8, "text-anchor": "middle" }, p.y)); });
+  const line = (k) => pts.map((p, j) => (j ? "L" : "M") + x(p.y) + " " + yy(p[k])).join(" ");
+  svg.append(el("path", { d: line("bal") + ` L ${x(S.term)} ${yy(0)} L ${x(0)} ${yy(0)} Z`, fill: "url(#ga)" }));
+  svg.append(el("path", { d: line("bal"), fill: "none", stroke: "url(#gl)", "stroke-width": 3, "stroke-linejoin": "round" }));
+  svg.append(el("path", { d: line("int"), fill: "none", stroke: "#9C6BC4", "stroke-width": 3, "stroke-linejoin": "round" }));
+  const dot1 = el("circle", { r: 5, fill: "#E0475B", stroke: "#fff", "stroke-width": 2, opacity: 0 }), dot2 = el("circle", { r: 5, fill: "#9C6BC4", stroke: "#fff", "stroke-width": 2, opacity: 0 });
+  const vl = el("line", { y1: m.t, y2: H - m.b, stroke: "#B9A9B6", "stroke-dasharray": "3 3", opacity: 0 });
+  svg.append(vl, dot1, dot2);
+  const tip = document.createElement("div"); tip.className = "tip"; box.appendChild(tip);
+  const hit = el("rect", { x: m.l, y: m.t, width: W - m.l - m.r, height: H - m.t - m.b, fill: "transparent" });
+  const move = (ev) => {
+    const rect = svg.getBoundingClientRect(); const px = (ev.clientX - rect.left) * (W / rect.width);
+    let yr = Math.round((px - m.l) / (W - m.l - m.r) * S.term); yr = Math.max(0, Math.min(S.term, yr));
+    const p = pts[yr]; const cx = x(p.y);
+    [vl].forEach((l) => { l.setAttribute("x1", cx); l.setAttribute("x2", cx); l.setAttribute("opacity", 1); });
+    dot1.setAttribute("cx", cx); dot1.setAttribute("cy", yy(p.bal)); dot1.setAttribute("opacity", 1);
+    dot2.setAttribute("cx", cx); dot2.setAttribute("cy", yy(p.int)); dot2.setAttribute("opacity", 1);
+    tip.innerHTML = "";
+    const b = document.createElement("b"); b.textContent = yr === 0 ? "Старт" : `Через ${yr} ${yearsWord(yr)}`; tip.appendChild(b);
+    [["Остаток долга", rub(p.bal)], ["Выплачено процентов", rub(p.int)]].forEach(([k, v]) => { const d = document.createElement("div"); d.textContent = k + ": " + v; tip.appendChild(d); });
+    const bw = box.clientWidth, tw = tip.offsetWidth, sx = cx * (rect.width / W);
+    tip.style.left = Math.max(0, Math.min(sx + 14 + tw > bw ? sx - tw - 14 : sx + 14, bw - tw)) + "px"; tip.style.top = "10px"; tip.style.opacity = 1;
+  };
+  hit.addEventListener("pointermove", move); hit.addEventListener("pointerenter", move);
+  hit.addEventListener("pointerleave", () => { tip.style.opacity = 0; [vl, dot1, dot2].forEach((e) => e.setAttribute("opacity", 0)); });
+  svg.appendChild(hit);
+}
+
+// --- поля и ползунки ---
+const fmtInput = (inp) => { const v = num(inp.value); inp.value = v ? nf.format(v) : ""; };
+$("price").addEventListener("input", (e) => { S.price = num(e.target.value); fmtInput(e.target); sync("price"); });
+$("down").addEventListener("input", (e) => { const d = num(e.target.value); S.downPct = S.price ? d / S.price * 100 : 0; fmtInput(e.target); sync("down"); });
+$("term").addEventListener("input", (e) => { S.term = num(e.target.value) || 1; sync("term"); });
+$("rate").addEventListener("input", (e) => { S.rate = num(e.target.value); document.querySelectorAll("#rate-chips .chip").forEach((c) => c.classList.remove("sel")); sync("rate"); });
+$("price-r").addEventListener("input", (e) => { S.price = Number(e.target.value); sync(); });
+$("down-r").addEventListener("input", (e) => { S.downPct = Number(e.target.value); sync(); });
+$("term-r").addEventListener("input", (e) => { S.term = Number(e.target.value); sync(); });
+document.querySelectorAll("#down-chips .chip").forEach((c) => c.addEventListener("click", () => { S.downPct = Number(c.dataset.v); sync(); }));
+document.querySelectorAll("#rate-chips .chip").forEach((c) => c.addEventListener("click", () => {
+  document.querySelectorAll("#rate-chips .chip").forEach((o) => o.classList.remove("sel")); c.classList.add("sel"); S.rate = Number(c.dataset.v); sync();
+}));
+["price", "down"].forEach((id) => $(id).addEventListener("blur", () => sync()));
+document.querySelector("#rate-chips .chip").classList.add("sel");
+sync();
+let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(drawChart, 150); });
+</script>
+</body>
+</html>
