@@ -1,0 +1,173 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Калькулятор ипотеки и рассрочки — Антон Махин, новостройки Казани</title>
+<style>
+  :root{--bg:#f4f6fb;--card:#fff;--ink:#16202e;--muted:#6b7686;--line:#e3e8f0;--accent:#2f6bff;--accent2:#7b3cff;--ok:#0e9f6e}
+  *{box-sizing:border-box}
+  body{margin:0;font-family:-apple-system,BlinkMacSystemFont,"Segoe UI",Roboto,Arial,sans-serif;background:var(--bg);color:var(--ink);line-height:1.45}
+  .wrap{max-width:640px;margin:0 auto;padding:20px 16px 40px}
+  header{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff;border-radius:20px;padding:22px 20px;margin-bottom:16px}
+  header h1{margin:0 0 6px;font-size:22px;line-height:1.25}
+  header p{margin:0;opacity:.9;font-size:14px}
+  .tabs{display:flex;gap:8px;margin-bottom:14px}
+  .tab{flex:1;padding:12px;border:1px solid var(--line);background:var(--card);border-radius:12px;font-size:15px;font-weight:600;cursor:pointer;color:var(--ink)}
+  .tab.on{background:var(--ink);color:#fff;border-color:var(--ink)}
+  .card{background:var(--card);border:1px solid var(--line);border-radius:16px;padding:18px;margin-bottom:14px}
+  label{display:block;font-size:13px;color:var(--muted);margin:14px 0 6px}
+  label:first-child{margin-top:0}
+  .row{display:flex;gap:10px;align-items:center}
+  input[type=number],select{width:100%;padding:12px;border:1px solid var(--line);border-radius:10px;font-size:16px;background:#fff;color:var(--ink)}
+  input[type=range]{width:100%;accent-color:var(--accent)}
+  .hint{font-size:12px;color:var(--muted);margin-top:4px}
+  .chips{display:flex;flex-wrap:wrap;gap:6px}
+  .chip{padding:8px 10px;border:1px solid var(--line);border-radius:999px;background:#fff;font-size:13px;cursor:pointer;color:var(--ink)}
+  .chip.on{border-color:var(--accent);background:#eef3ff;color:var(--accent);font-weight:600}
+  .res{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+  .big{grid-column:1/-1;background:#eef3ff;border-radius:12px;padding:14px}
+  .big .v{font-size:30px;font-weight:800;color:var(--accent)}
+  .cell{background:#f7f9fc;border-radius:12px;padding:12px}
+  .k{font-size:12px;color:var(--muted)}
+  .v{font-size:18px;font-weight:700}
+  .cta{background:var(--ink);color:#fff}
+  .cta h2{margin:0 0 6px;font-size:18px}
+  .cta p{margin:0 0 14px;font-size:14px;opacity:.85}
+  .btn{display:block;width:100%;text-align:center;padding:14px;border-radius:12px;font-size:15px;font-weight:700;text-decoration:none;border:0;cursor:pointer;margin-top:8px}
+  .b1{background:linear-gradient(135deg,var(--accent),var(--accent2));color:#fff}
+  .b2{background:#fff;color:var(--ink)}
+  .b3{background:transparent;color:#fff;border:1px solid rgba(255,255,255,.35)}
+  .contact{margin-top:14px;font-size:15px;text-align:center}
+  .contact b{font-size:16px}
+  .toast{margin-top:10px;font-size:13px;color:#9fe3c8;text-align:center;min-height:18px}
+  .note{font-size:12px;color:var(--muted);text-align:center;margin-top:10px}
+  [hidden]{display:none!important}
+</style>
+</head>
+<body>
+<div class="wrap">
+  <header>
+    <h1>Посчитайте платёж за 1 минуту</h1>
+    <p>Калькулятор ипотеки и рассрочки от Антона Махина — эксперта по новостройкам Казани</p>
+  </header>
+
+  <div class="tabs">
+    <button class="tab on" data-t="mort">Ипотека</button>
+    <button class="tab" data-t="inst">Рассрочка</button>
+  </div>
+
+  <!-- ИПОТЕКА -->
+  <section id="mort">
+    <div class="card">
+      <label>Стоимость квартиры, ₽</label>
+      <input type="number" id="mPrice" value="8000000" step="100000" min="0">
+      <label>Первоначальный взнос: <b id="mDownTxt"></b></label>
+      <input type="range" id="mDown" min="0" max="90" value="20" step="1">
+      <label>Программа / ставка</label>
+      <div class="chips" id="rates">
+        <button class="chip on" data-r="6">Семейная 6%</button>
+        <button class="chip" data-r="6" data-n="it">IT 6%</button>
+        <button class="chip" data-r="3.5">Субсидия застройщика от 3,5%</button>
+        <button class="chip" data-r="12">Субсидированная ~12%</button>
+        <button class="chip" data-r="18">Рыночная ~18%</button>
+      </div>
+      <div class="row" style="margin-top:8px">
+        <input type="number" id="mRate" value="6" step="0.1" min="0">
+        <span style="color:var(--muted)">% годовых</span>
+      </div>
+      <label>Срок: <b id="mYearsTxt"></b></label>
+      <input type="range" id="mYears" min="1" max="30" value="30" step="1">
+    </div>
+    <div class="card res">
+      <div class="big"><div class="k">Ежемесячный платёж</div><div class="v" id="mPay">—</div></div>
+      <div class="cell"><div class="k">Сумма кредита</div><div class="v" id="mLoan">—</div></div>
+      <div class="cell"><div class="k">Переплата</div><div class="v" id="mOver">—</div></div>
+      <div class="cell" style="grid-column:1/-1"><div class="k">Всего выплатите (с первым взносом)</div><div class="v" id="mTotal">—</div></div>
+    </div>
+  </section>
+
+  <!-- РАССРОЧКА -->
+  <section id="inst" hidden>
+    <div class="card">
+      <label>Стоимость квартиры, ₽</label>
+      <input type="number" id="iPrice" value="8000000" step="100000" min="0">
+      <label>Первоначальный взнос: <b id="iDownTxt"></b></label>
+      <input type="range" id="iDown" min="0" max="90" value="0" step="1">
+      <label>Срок рассрочки: <b id="iMonthsTxt"></b></label>
+      <input type="range" id="iMonths" min="3" max="120" value="84" step="1">
+      <div class="hint">Бывают рассрочки без ПВ на 7 лет и до 10 лет — условия зависят от ЖК</div>
+    </div>
+    <div class="card res">
+      <div class="big"><div class="k">Ежемесячный платёж</div><div class="v" id="iPay">—</div></div>
+      <div class="cell"><div class="k">Остаток в рассрочку</div><div class="v" id="iRest">—</div></div>
+      <div class="cell"><div class="k">Платежей</div><div class="v" id="iCount">—</div></div>
+    </div>
+  </section>
+
+  <div class="card cta">
+    <h2>Хотите расчёт по реальным ЖК?</h2>
+    <p>Антон подберёт квартиру под ваш бюджет, найдёт скидки и субсидированные ставки. Для покупателя бесплатно — платит застройщик.</p>
+    <button class="btn b1" id="writeMax">✍️ Написать Антону в личку MAX</button>
+    <a class="btn b2" href="https://max.ru/join/qw-YDFwCp5jdrjxwTHNbKOuo81XDAmM8N7G9sgGiArk" target="_blank" rel="noopener">📢 Канал «Антон Махин про Новостройки Казани» в MAX</a>
+    <a class="btn b3" href="tel:+79874079909">📞 Позвонить</a>
+    <div class="contact">Антон Махин | <b>8 987 407-99-09</b></div>
+    <div class="toast" id="toast"></div>
+  </div>
+
+  <p class="note">Расчёт ориентировочный (аннуитетный платёж). Ставки и условия зависят от банка, ЖК и программы — точный расчёт делает Антон на консультации.</p>
+</div>
+
+<script>
+const $=id=>document.getElementById(id);
+const rub=n=>isFinite(n)?Math.round(n).toLocaleString('ru-RU')+' ₽':'—';
+const yrs=n=>{const m=n%10,h=n%100;return n+' '+(m==1&&h!=11?'год':(m>=2&&m<=4&&(h<12||h>14))?'года':'лет')};
+let tab='mort';
+
+document.querySelectorAll('.tab').forEach(b=>b.onclick=()=>{
+  tab=b.dataset.t;
+  document.querySelectorAll('.tab').forEach(x=>x.classList.toggle('on',x===b));
+  $('mort').hidden=tab!=='mort'; $('inst').hidden=tab!=='inst';
+});
+document.querySelectorAll('#rates .chip').forEach(c=>c.onclick=()=>{
+  document.querySelectorAll('#rates .chip').forEach(x=>x.classList.remove('on'));
+  c.classList.add('on'); $('mRate').value=c.dataset.r; calc();
+});
+$('mRate').oninput=()=>{document.querySelectorAll('#rates .chip').forEach(x=>x.classList.remove('on'));calc();};
+['mPrice','mDown','mYears','iPrice','iDown','iMonths'].forEach(id=>$(id).addEventListener('input',calc));
+
+let summary='';
+function calc(){
+  const P=+$('mPrice').value||0, d=+$('mDown').value, r=(+$('mRate').value||0)/100/12, n=+$('mYears').value*12;
+  const down=P*d/100, L=P-down;
+  const pay = r>0 ? L*r/(1-Math.pow(1+r,-n)) : L/n;
+  $('mDownTxt').textContent=d+'% — '+rub(down);
+  $('mYearsTxt').textContent=yrs(+$('mYears').value);
+  $('mPay').textContent=rub(pay); $('mLoan').textContent=rub(L);
+  $('mOver').textContent=rub(pay*n-L); $('mTotal').textContent=rub(pay*n+down);
+
+  const IP=+$('iPrice').value||0, id=+$('iDown').value, im=+$('iMonths').value;
+  const idown=IP*id/100, rest=IP-idown;
+  $('iDownTxt').textContent=id+'% — '+rub(idown);
+  const y=Math.floor(im/12), mm=im%12;
+  $('iMonthsTxt').textContent=im+' мес.'+(y?' ('+yrs(y)+(mm?' '+mm+' мес.':'')+')':'');
+  $('iPay').textContent=rub(rest/im); $('iRest').textContent=rub(rest); $('iCount').textContent=im;
+
+  summary = tab==='mort'
+    ? `Здравствуйте, Антон! Посчитал(а) ипотеку в калькуляторе: квартира ${rub(P)}, взнос ${d}% (${rub(down)}), ставка ${$('mRate').value}%, срок ${yrs(+$('mYears').value)} — платёж ${rub(pay)}/мес. Подберите варианты, пожалуйста.`
+    : `Здравствуйте, Антон! Посчитал(а) рассрочку в калькуляторе: квартира ${rub(IP)}, взнос ${id}% (${rub(idown)}), срок ${im} мес. — платёж ${rub(rest/im)}/мес. Подберите варианты, пожалуйста.`;
+}
+calc();
+document.querySelectorAll('.tab').forEach(b=>b.addEventListener('click',calc));
+
+$('writeMax').onclick=async()=>{
+  calc();
+  let ok=false;
+  try{await navigator.clipboard.writeText(summary);ok=true;}catch(e){}
+  $('toast').innerHTML = (ok ? 'Сообщение с вашим расчётом скопировано ✅<br>' : '')
+    + 'Откройте MAX → поиск → номер <b>+7 987 407-99-09</b> (Антон Махин) → '+(ok?'вставьте сообщение':'напишите «Квартира»')
+    + '<br><a href="https://web.max.ru" target="_blank" rel="noopener" style="color:#fff">Открыть MAX</a>';
+};
+</script>
+</body>
+</html>
