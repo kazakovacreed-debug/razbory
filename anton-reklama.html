@@ -1,0 +1,334 @@
+<!DOCTYPE html>
+<html lang="ru">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Реклама MAX-канала Антона Махина — ноябрь 2026</title>
+<style>
+  :root {
+    --bg: #faf9f6; --panel: #ffffff; --fg: #1f1e1c; --muted: #6b6862; --line: #e6e3dc;
+    --accent: #2f6f8f; --accent-soft: #d6e6ee; --ok: #2e7d4f; --warn: #b26b00; --ref: #9a968e;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root { --bg: #1b1a18; --panel: #24231f; --fg: #f0eee9; --muted: #a7a399; --line: #3a3833;
+      --accent: #6fb3d3; --accent-soft: #2c4553; --ok: #6cc28f; --warn: #e2a64a; --ref: #77736b; }
+  }
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--fg);
+    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    line-height: 1.5; font-size: 16px; }
+  .wrap { max-width: 960px; margin: 0 auto; padding: 28px 18px 60px; }
+  h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: 30px; line-height: 1.2; margin: 0 0 10px; }
+  h2 { font-size: 19px; margin: 0 0 4px; }
+  .lede { max-width: 62ch; margin: 0 0 28px; }
+  .sub { color: var(--muted); font-size: 13px; margin: 0 0 14px; }
+  section { margin: 0 0 36px; }
+  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 0 0 36px; }
+  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
+  .card .label { color: var(--muted); font-size: 13px; margin: 0 0 4px; }
+  .card .big { font-family: Georgia, serif; font-size: 32px; line-height: 1.1; margin: 0; font-variant-numeric: tabular-nums; }
+  .card .note { color: var(--muted); font-size: 13px; margin: 6px 0 0; }
+  .chart { position: relative; }
+  .chart svg { display: block; width: 100%; height: auto; overflow: visible; }
+  .chart text { font-size: 12px; fill: var(--muted); font-family: inherit; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--muted); margin: 0 0 8px; }
+  .sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: var(--accent); margin-right: 6px; vertical-align: -1px; }
+  .swl { display: inline-block; width: 14px; border-top: 1px dashed var(--ref); margin-right: 6px; vertical-align: 3px; }
+  .key { display: flex; flex-wrap: wrap; gap: 4px 16px; padding: 0; margin: 10px 0 0; list-style: none; font-size: 13px; color: var(--muted); }
+  .key b { color: var(--fg); font-weight: 600; margin-right: 4px; }
+  .tip { position: absolute; pointer-events: none; background: var(--panel); border: 1px solid var(--line);
+    box-shadow: 0 4px 16px rgba(0,0,0,.12); border-radius: 8px; padding: 8px 10px; font-size: 13px; white-space: nowrap;
+    opacity: 0; transition: opacity .1s; z-index: 2; font-variant-numeric: tabular-nums; }
+  .tip .m { color: var(--muted); }
+  .tablewrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
+  table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 9px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; vertical-align: top; }
+  th { color: var(--muted); font-weight: 500; font-size: 13px; }
+  .num { text-align: right; }
+  tfoot td { font-weight: 600; border-bottom: none; }
+  .small { color: var(--muted); font-size: 12px; white-space: normal; }
+  .pill { display: inline-block; padding: 1px 9px; border-radius: 999px; border: 1px solid var(--line); font-size: 12px; }
+  .pill.done { color: var(--ok); border-color: var(--ok); }
+  .pill.wait { color: var(--warn); border-color: var(--warn); }
+  .pill.plan { color: var(--muted); }
+  details { color: var(--muted); font-size: 14px; }
+  details summary { cursor: pointer; color: var(--fg); }
+  details p { max-width: 70ch; margin: 8px 0; }
+  footer { color: var(--muted); font-size: 12px; margin-top: 40px; }
+</style>
+</head>
+<body>
+<div class="wrap">
+  <h1>Реклама MAX-канала Антона Махина — ноябрь 2026</h1>
+  <p class="lede" id="lede"></p>
+
+  <div class="tiles">
+    <div class="card"><p class="label">Бюджет на рекламу, ноябрь</p><p class="big" id="t-budget"></p><p class="note" id="t-budget-note"></p></div>
+    <div class="card"><p class="label">Подписчиков с рекламы</p><p class="big" id="t-subs"></p><p class="note">за дни вышедших размещений</p></div>
+    <div class="card"><p class="label">Цена подписчика</p><p class="big" id="t-cps"></p><p class="note">бюджет вышедших размещений ÷ подписки</p></div>
+    <div class="card"><p class="label">Подписчиков в канале</p><p class="big" id="t-total"></p><p class="note" id="t-total-note"></p></div>
+  </div>
+
+  <section>
+    <h2>Подписки по дням</h2>
+    <p class="sub" id="daily-sub"></p>
+    <div class="legend"><span><i class="sw"></i>Подписались</span><span><i class="swl"></i>Выход рекламы</span></div>
+    <div class="chart" id="daily"></div>
+    <ol class="key" id="key"></ol>
+  </section>
+
+  <section>
+    <h2>Сколько стоил один подписчик</h2>
+    <p class="sub">Стоимость размещения ÷ подписки за его окно. Меньше — лучше.</p>
+    <div class="chart" id="cps"></div>
+  </section>
+
+  <section>
+    <h2>Все размещения</h2>
+    <p class="sub">Окно — день выхода и все следующие дни до выхода следующей рекламы.</p>
+    <div class="tablewrap">
+      <table>
+        <thead><tr>
+          <th>Выход</th><th>Площадка</th><th>Через кого</th><th class="num">Стоимость</th>
+          <th>Статус</th><th>Окно</th><th class="num">Подписок</th><th class="num">₽ за подписчика</th>
+        </tr></thead>
+        <tbody id="rows"></tbody>
+        <tfoot id="foot"></tfoot>
+      </table>
+    </div>
+  </section>
+
+  <details>
+    <summary>Как считали</summary>
+    <p>Подписки взяты из «Статистики канала» MAX по дням. У всех размещений одна ссылка-приглашение, поэтому подписчиков относим к рекламе по дате: всё, что пришло в день выхода и в следующие дни до выхода следующей рекламы, засчитывается этому размещению.</p>
+    <p id="organic"></p>
+    <p>Посты 4–6 и 10–11 ноября вышли подряд, на стыках подписчики смешиваются.</p>
+  </details>
+
+  <footer id="updated"></footer>
+</div>
+
+<script>
+// ===== ДАННЫЕ: чтобы обновить страницу, меняйте только этот блок =====
+const UPDATED = "2026-11-20";
+const ADS = [
+  { date: "2026-11-04", placement: "cakesbygulik2", via: "Через Эльвиру", cost: 16000 },
+  { date: "2026-11-05", placement: "channel_zakirova", via: "Через Эльвиру", cost: 7500 },
+  { date: "2026-11-06", placement: "chulpan_gini", via: "Через Эльвиру", cost: 11165, note: "11 000 + 165 комиссия банка" },
+  { date: "2026-11-10", placement: "Регион116 Казань", via: "Напрямую", cost: 30000 },
+  { date: "2026-11-11", placement: "Рождественская в Казани", via: "Напрямую", cost: 11000, note: "10 000 + 1 000 маркировка" },
+  { date: "2026-11-19", placement: "aigul_tamle", via: "Через Эльвиру", cost: 12000 },
+  { date: "2026-11-24", placement: "ravilyadavletova", via: "Через Эльвиру", cost: 5000 },
+  { date: "2026-11-30", placement: "tamle_tabyn_tg", via: "Через Эльвиру", cost: 13000 },
+  { date: "", placement: "milechka_tatar", via: "Через Эльвиру", cost: 9000, note: "дата не согласована" },
+];
+// Подписки по дням (статистика канала MAX)
+const DAILY = {
+  "2026-11-01": 12, "2026-11-02": 12, "2026-11-03": 9, "2026-11-04": 115, "2026-11-05": 74,
+  "2026-11-06": 43, "2026-11-07": 14, "2026-11-08": 8, "2026-11-09": 13, "2026-11-10": 114,
+  "2026-11-11": 80, "2026-11-12": 10, "2026-11-13": 3, "2026-11-14": 3, "2026-11-15": 8,
+  "2026-11-16": 7, "2026-11-17": 3, "2026-11-18": 2,
+};
+// Всего подписчиков в канале на дату
+const TOTAL = { date: "2026-11-20", subscribers: 3479 };
+// ===== конец данных =====
+
+const nf = new Intl.NumberFormat("ru-RU");
+const n = (v) => (v == null ? "—" : nf.format(Math.round(v)));
+const rub = (v) => (v == null ? "—" : nf.format(Math.round(v)) + " ₽");
+const dm = (s) => (s ? s.slice(8, 10) + "." + s.slice(5, 7) : "—");
+const svgNS = "http://www.w3.org/2000/svg";
+const el = (tag, attrs = {}, text) => {
+  const e = document.createElementNS(svgNS, tag);
+  for (const k in attrs) e.setAttribute(k, attrs[k]);
+  if (text != null) e.textContent = text;
+  return e;
+};
+const css = (name) => getComputedStyle(document.documentElement).getPropertyValue(name).trim();
+
+// ---- расчёт ----
+const days = Object.keys(DAILY).sort().map((d) => ({ date: d, subs: DAILY[d] }));
+const lastDay = days.length ? days[days.length - 1].date : null;
+const now = new Date();
+const today = now.getFullYear() + "-" + String(now.getMonth() + 1).padStart(2, "0") + "-" + String(now.getDate()).padStart(2, "0");
+const dated = ADS.filter((a) => a.date).map((a) => a.date).sort();
+const rows = ADS.map((a) => {
+  const r = { ...a, status: "", from: null, to: null, subs: null, cps: null };
+  if (!a.date) { r.status = "Дата не согласована"; return r; }
+  if (!lastDay || a.date > lastDay) { r.status = a.date <= today ? "Вышла, ждём статистику" : "Запланирована"; return r; }
+  const next = dated.find((d) => d > a.date);
+  const win = days.filter((d) => d.date >= a.date && (!next || d.date < next));
+  r.status = "Вышла";
+  r.from = a.date;
+  r.to = win.length ? win[win.length - 1].date : a.date;
+  r.subs = win.reduce((s, d) => s + d.subs, 0);
+  r.cps = r.subs > 0 ? r.cost / r.subs : null;
+  return r;
+}).sort((x, y) => (!x.date ? 1 : !y.date ? -1 : x.date.localeCompare(y.date)));
+const done = rows.filter((r) => r.status === "Вышла");
+const budget = rows.reduce((s, r) => s + r.cost, 0);
+const spent = done.reduce((s, r) => s + r.cost, 0);
+const subs = done.reduce((s, r) => s + r.subs, 0);
+const cps = subs ? spent / subs : null;
+const ranked = done.filter((r) => r.cps != null).sort((a, b) => a.cps - b.cps);
+const first = done.length ? done.map((r) => r.date).sort()[0] : null;
+const before = days.filter((d) => first && d.date < first);
+const winLabel = (r) => (!r.from ? "—" : r.from === r.to ? dm(r.from) : dm(r.from) + "–" + dm(r.to));
+
+// ---- тексты ----
+const setText = (id, t) => { document.getElementById(id).textContent = t; };
+const lede = document.getElementById("lede");
+lede.textContent = `Вышли и уже посчитаны ${done.length} размещений из ${rows.length}: за ${rub(spent)} они привели ${n(subs)} подписчиков, по ${rub(cps)} за каждого.` +
+  (ranked.length ? ` Дешевле всех — ${ranked[0].placement} (${rub(ranked[0].cps)}), дороже всех — ${ranked[ranked.length - 1].placement} (${rub(ranked[ranked.length - 1].cps)}).` : "");
+setText("t-budget", rub(budget));
+setText("t-budget-note", `${rows.length} размещений, из них вышло и посчитано на ${rub(spent)}`);
+setText("t-subs", n(subs));
+setText("t-cps", rub(cps));
+setText("t-total", n(TOTAL.subscribers));
+setText("t-total-note", "на " + dm(TOTAL.date));
+setText("daily-sub", `Статистика канала MAX с ${dm(days[0] && days[0].date)} по ${dm(lastDay)}. Пунктир — день выхода рекламы.`);
+setText("organic", before.length
+  ? `До первой рекламы (${dm(before[0].date)}–${dm(before[before.length - 1].date)}) канал рос сам: пришло ${n(before.reduce((s, d) => s + d.subs, 0))} подписчиков. Их нет ни у одного размещения.`
+  : "");
+setText("updated", "Обновлено " + dm(UPDATED) + "." + UPDATED.slice(0, 4));
+
+// ---- таблица ----
+const tb = document.getElementById("rows");
+rows.forEach((r) => {
+  const tr = tb.insertRow();
+  const c = (t, cls) => { const td = tr.insertCell(); td.textContent = t; if (cls) td.className = cls; return td; };
+  c(r.date ? dm(r.date) : "—");
+  const p = c(r.placement);
+  if (r.note) { const d = document.createElement("div"); d.className = "small"; d.textContent = r.note; p.appendChild(d); }
+  c(r.via);
+  c(rub(r.cost), "num");
+  const st = tr.insertCell();
+  const pill = document.createElement("span");
+  pill.className = "pill " + (r.status === "Вышла" ? "done" : r.status.startsWith("Вышла") ? "wait" : "plan");
+  pill.textContent = r.status;
+  st.appendChild(pill);
+  c(winLabel(r));
+  c(n(r.subs), "num");
+  c(rub(r.cps), "num");
+});
+const ft = document.getElementById("foot").insertRow();
+["", "Итого вышло", "", rub(spent), `${done.length} из ${rows.length}`, "", n(subs), rub(cps)].forEach((t, i) => {
+  const td = ft.insertCell(); td.textContent = t; if ([3, 6, 7].includes(i)) td.className = "num";
+});
+
+// ---- графики ----
+function tipFor(box) {
+  const t = document.createElement("div"); t.className = "tip"; box.appendChild(t); return t;
+}
+function placeTip(tip, box, x, y) {
+  const w = tip.offsetWidth, bw = box.clientWidth;
+  tip.style.left = Math.max(0, Math.min(x + 12 + w > bw ? x - w - 12 : x + 12, bw - w)) + "px";
+  tip.style.top = y + "px";
+  tip.style.opacity = 1;
+}
+
+function drawDaily() {
+  const box = document.getElementById("daily");
+  box.innerHTML = "";
+  const W = Math.max(300, box.clientWidth), H = 300;
+  const m = { t: 44, r: 6, b: 26, l: 34 };
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Подписки MAX-канала по дням ноября с отметками выхода рекламы" });
+  box.appendChild(svg);
+  const max = Math.max(...days.map((d) => d.subs), 1);
+  const niceMax = Math.ceil(max / 20) * 20;
+  const y = (v) => H - m.b - (v / niceMax) * (H - m.t - m.b);
+  const step = (W - m.l - m.r) / days.length;
+  const bw = step * 0.7;
+  const x = (i) => m.l + i * step + (step - bw) / 2;
+  for (let v = 0; v <= niceMax; v += niceMax / 4) {
+    svg.appendChild(el("line", { x1: m.l, x2: W - m.r, y1: y(v), y2: y(v), stroke: css("--line") }));
+    svg.appendChild(el("text", { x: m.l - 6, y: y(v) + 4, "text-anchor": "end" }, n(v)));
+  }
+  const every = W < 480 ? 3 : 1;
+  days.forEach((d, i) => {
+    svg.appendChild(el("rect", { x: x(i), y: y(d.subs), width: bw, height: Math.max(0, y(0) - y(d.subs)), rx: 2, fill: css("--accent") }));
+    if (i % every === 0) svg.appendChild(el("text", { x: x(i) + bw / 2, y: H - 8, "text-anchor": "middle" }, d.date.slice(8, 10)));
+  });
+  done.forEach((r, k) => {
+    const i = days.findIndex((d) => d.date === r.date);
+    if (i < 0) return;
+    const xx = m.l + i * step;
+    svg.appendChild(el("line", { x1: xx, x2: xx, y1: m.t - 6, y2: H - m.b, stroke: css("--ref"), "stroke-dasharray": "3 3" }));
+    svg.appendChild(el("circle", { cx: xx, cy: m.t - 18, r: 9, fill: css("--panel"), stroke: css("--ref") }));
+    svg.appendChild(el("text", { x: xx, y: m.t - 14, "text-anchor": "middle", style: "fill: var(--fg)" }, String(k + 1)));
+  });
+  const tip = tipFor(box);
+  days.forEach((d, i) => {
+    const hit = el("rect", { x: m.l + i * step, y: m.t, width: step, height: H - m.t - m.b, fill: "transparent" });
+    const show = (ev) => {
+      const ad = done.find((r) => d.date >= r.from && d.date <= r.to);
+      tip.innerHTML = "";
+      const b = document.createElement("b"); b.textContent = dm(d.date); tip.appendChild(b);
+      const l1 = document.createElement("div"); l1.textContent = "Подписались: " + n(d.subs); tip.appendChild(l1);
+      const l2 = document.createElement("div"); l2.className = "m"; l2.textContent = ad ? "Засчитано: " + ad.placement : "До рекламы"; tip.appendChild(l2);
+      const rect = box.getBoundingClientRect();
+      placeTip(tip, box, (ev.clientX || rect.left) - rect.left, 36);
+    };
+    hit.addEventListener("pointerenter", show);
+    hit.addEventListener("pointermove", show);
+    hit.addEventListener("pointerleave", () => (tip.style.opacity = 0));
+    svg.appendChild(hit);
+  });
+}
+
+function drawCps() {
+  const box = document.getElementById("cps");
+  box.innerHTML = "";
+  const list = done.filter((r) => r.cps != null).sort((a, b) => a.cps - b.cps);
+  if (!list.length) { box.textContent = "Пока нет вышедших размещений со статистикой."; return; }
+  const W = Math.max(300, box.clientWidth), rowH = 36, H = list.length * rowH + 6;
+  const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Цена одного подписчика по каждому размещению" });
+  box.appendChild(svg);
+  const probe = el("text", {}, "");
+  svg.appendChild(probe);
+  let lw = 0, vw = 0;
+  list.forEach((r) => { probe.textContent = r.placement; lw = Math.max(lw, probe.getComputedTextLength()); probe.textContent = rub(r.cps); vw = Math.max(vw, probe.getComputedTextLength()); });
+  probe.remove();
+  const labelW = Math.min(lw + 12, W * 0.45);
+  const max = Math.max(...list.map((r) => r.cps));
+  const xs = (v) => labelW + (v / max) * (W - labelW - vw - 14);
+  const tip = tipFor(box);
+  list.forEach((r, i) => {
+    const y0 = i * rowH + 3;
+    const t = el("text", { x: 0, y: y0 + rowH / 2 + 2 }, r.placement);
+    svg.appendChild(t);
+    while (t.getComputedTextLength() > labelW - 10 && t.textContent.length > 4) t.textContent = t.textContent.slice(0, -2) + "…";
+    svg.appendChild(el("rect", { x: labelW, y: y0 + 7, width: Math.max(1, xs(r.cps) - labelW), height: rowH - 16, rx: 3, fill: css("--accent") }));
+    svg.appendChild(el("text", { x: xs(r.cps) + 6, y: y0 + rowH / 2 + 2, style: "fill: var(--fg)" }, rub(r.cps)));
+    const hit = el("rect", { x: 0, y: y0, width: W, height: rowH, fill: "transparent" });
+    const show = (ev) => {
+      tip.innerHTML = "";
+      const b = document.createElement("b"); b.textContent = r.placement; tip.appendChild(b);
+      [["Стоимость", rub(r.cost)], ["Окно", winLabel(r)], ["Подписчиков", n(r.subs)], ["Цена подписчика", rub(r.cps)]].forEach(([k, v]) => {
+        const d = document.createElement("div"); d.textContent = k + ": " + v; tip.appendChild(d);
+      });
+      const rect = box.getBoundingClientRect();
+      placeTip(tip, box, (ev.clientX || rect.left) - rect.left, y0 + rowH);
+    };
+    hit.addEventListener("pointerenter", show);
+    hit.addEventListener("pointermove", show);
+    hit.addEventListener("pointerleave", () => (tip.style.opacity = 0));
+    svg.appendChild(hit);
+  });
+}
+
+const key = document.getElementById("key");
+done.forEach((r, k) => {
+  const li = document.createElement("li");
+  const b = document.createElement("b"); b.textContent = (k + 1) + ".";
+  li.appendChild(b); li.appendChild(document.createTextNode(r.placement + " — " + dm(r.date)));
+  key.appendChild(li);
+});
+
+function drawAll() { drawDaily(); drawCps(); }
+drawAll();
+let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(drawAll, 150); });
+matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", drawAll);
+</script>
+</body>
+</html>
