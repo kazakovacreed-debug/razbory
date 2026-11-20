@@ -4,93 +4,117 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Реклама MAX-канала Антона Махина — ноябрь 2026</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700;800;900&display=swap" rel="stylesheet">
 <style>
   :root {
-    --bg: #faf9f6; --panel: #ffffff; --fg: #1f1e1c; --muted: #6b6862; --line: #e6e3dc;
-    --accent: #2f6f8f; --accent-soft: #d6e6ee; --ok: #2e7d4f; --warn: #b26b00; --ref: #9a968e;
+    --bg: #F8EEEB; --ink: #1C1B22; --muted: #7A7480; --navy: #0B0838; --red: #E0475B; --line: #EFE4E1;
+    --panel: #ffffff; --fg: #1C1B22; --ref: #B9A9B6; --ok: #2E9E5B; --warn: #E07A28;
+    --grad: linear-gradient(90deg, #F28C28, #E0475B 55%, #6E2A9C);
+    --title: linear-gradient(90deg, #0B0838 0%, #7A2390 45%, #E0565A 75%, #F2643A 100%);
   }
-  @media (prefers-color-scheme: dark) {
-    :root { --bg: #1b1a18; --panel: #24231f; --fg: #f0eee9; --muted: #a7a399; --line: #3a3833;
-      --accent: #6fb3d3; --accent-soft: #2c4553; --ok: #6cc28f; --warn: #e2a64a; --ref: #77736b; }
-  }
-  * { box-sizing: border-box; }
-  body { margin: 0; background: var(--bg); color: var(--fg);
-    font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    line-height: 1.5; font-size: 16px; }
-  .wrap { max-width: 960px; margin: 0 auto; padding: 28px 18px 60px; }
-  h1 { font-family: Georgia, "Times New Roman", serif; font-weight: 400; font-size: 30px; line-height: 1.2; margin: 0 0 10px; }
-  h2 { font-size: 19px; margin: 0 0 4px; }
-  .lede { max-width: 62ch; margin: 0 0 28px; }
-  .sub { color: var(--muted); font-size: 13px; margin: 0 0 14px; }
-  section { margin: 0 0 36px; }
-  .tiles { display: grid; grid-template-columns: repeat(auto-fit, minmax(190px, 1fr)); gap: 12px; margin: 0 0 36px; }
-  .card { background: var(--panel); border: 1px solid var(--line); border-radius: 12px; padding: 16px 18px; }
-  .card .label { color: var(--muted); font-size: 13px; margin: 0 0 4px; }
-  .card .big { font-family: Georgia, serif; font-size: 32px; line-height: 1.1; margin: 0; font-variant-numeric: tabular-nums; }
-  .card .note { color: var(--muted); font-size: 13px; margin: 6px 0 0; }
+  * { box-sizing: border-box; margin: 0; padding: 0; }
+  body { font-family: Inter, system-ui, sans-serif; color: var(--ink); background: var(--bg); line-height: 1.45; font-size: 16px;
+    background-image: radial-gradient(600px 400px at 100% 0%, rgba(178,140,220,.35), transparent 70%),
+      radial-gradient(500px 400px at 100% 100%, rgba(242,140,110,.28), transparent 70%),
+      radial-gradient(500px 400px at 0% 100%, rgba(178,140,220,.25), transparent 70%);
+    background-attachment: fixed; }
+  .wrap { max-width: 980px; margin: 0 auto; padding: 32px 20px 48px; }
+  .top { display: flex; justify-content: space-between; align-items: flex-start; gap: 16px; }
+  .pill-top { display: inline-block; background: var(--grad); color: #fff; font-weight: 800; font-size: 12px; letter-spacing: .12em;
+    padding: 7px 14px; border-radius: 99px; text-transform: uppercase; }
+  .logo { flex: none; width: 72px; height: 72px; border-radius: 50%; background: var(--navy); display: flex; align-items: center;
+    justify-content: center; text-align: center; font-weight: 900; font-size: 13px; line-height: 1.05; color: #fff; }
+  .logo span { background: var(--grad); -webkit-background-clip: text; background-clip: text; color: transparent; font-size: 22px; }
+  h1 { font-weight: 900; font-size: clamp(34px, 7vw, 60px); line-height: .98; text-transform: uppercase; letter-spacing: -.02em;
+    margin: 14px 0 14px; background: var(--title); -webkit-background-clip: text; background-clip: text; color: transparent; }
+  h2 { font-weight: 900; font-size: clamp(22px, 4vw, 32px); text-transform: uppercase; letter-spacing: -.01em; line-height: 1.05;
+    margin: 44px 0 6px; background: var(--title); -webkit-background-clip: text; background-clip: text; color: transparent; display: inline-block; }
+  .lede { font-size: 18px; color: var(--muted); max-width: 760px; }
+  .lede b { color: var(--ink); }
+  .sub { color: var(--muted); margin-bottom: 18px; max-width: 760px; }
+  .card { background: #fff; border-radius: 26px; padding: 22px 20px; box-shadow: 0 6px 24px rgba(60,20,60,.07); }
+  .tiles { display: grid; grid-template-columns: repeat(4, 1fr); gap: 16px; margin-top: 22px; }
+  @media (max-width: 760px) { .tiles { grid-template-columns: 1fr 1fr; } }
+  .stat { text-align: center; padding: 20px 14px; }
+  .stat .big { font-weight: 900; font-size: clamp(24px, 4vw, 36px); line-height: 1; background: var(--title);
+    -webkit-background-clip: text; background-clip: text; color: transparent; font-variant-numeric: tabular-nums; }
+  .stat .label { font-size: 13px; color: var(--ink); font-weight: 700; margin-top: 10px; }
+  .stat .note { font-size: 12.5px; color: var(--muted); margin-top: 4px; }
+  .quote { background: var(--navy); color: #fff; border-radius: 26px; padding: 24px 26px; margin-top: 16px; }
+  .quote p { font-size: 19px; font-weight: 700; line-height: 1.35; }
+  .quote .who { margin-top: 10px; font-size: 12px; font-weight: 800; letter-spacing: .12em; color: #F2A06A; text-transform: uppercase; }
   .chart { position: relative; }
   .chart svg { display: block; width: 100%; height: auto; overflow: visible; }
   .chart text { font-size: 12px; fill: var(--muted); font-family: inherit; }
-  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--muted); margin: 0 0 8px; }
-  .sw { display: inline-block; width: 10px; height: 10px; border-radius: 2px; background: var(--accent); margin-right: 6px; vertical-align: -1px; }
-  .swl { display: inline-block; width: 14px; border-top: 1px dashed var(--ref); margin-right: 6px; vertical-align: 3px; }
-  .key { display: flex; flex-wrap: wrap; gap: 4px 16px; padding: 0; margin: 10px 0 0; list-style: none; font-size: 13px; color: var(--muted); }
-  .key b { color: var(--fg); font-weight: 600; margin-right: 4px; }
-  .tip { position: absolute; pointer-events: none; background: var(--panel); border: 1px solid var(--line);
-    box-shadow: 0 4px 16px rgba(0,0,0,.12); border-radius: 8px; padding: 8px 10px; font-size: 13px; white-space: nowrap;
-    opacity: 0; transition: opacity .1s; z-index: 2; font-variant-numeric: tabular-nums; }
+  .legend { display: flex; gap: 16px; flex-wrap: wrap; font-size: 13px; color: var(--muted); margin: 0 0 10px; }
+  .sw { display: inline-block; width: 12px; height: 12px; border-radius: 4px; background: var(--grad); margin-right: 6px; vertical-align: -1px; }
+  .swl { display: inline-block; width: 14px; border-top: 2px dashed var(--ref); margin-right: 6px; vertical-align: 3px; }
+  .key { display: flex; flex-wrap: wrap; gap: 6px 18px; list-style: none; margin: 14px 0 0; font-size: 13.5px; color: var(--muted); }
+  .key b { display: inline-flex; width: 22px; height: 22px; border-radius: 50%; background: var(--grad); color: #fff; font-size: 11px;
+    align-items: center; justify-content: center; margin-right: 6px; }
+  .tip { position: absolute; pointer-events: none; background: #fff; border-radius: 14px; box-shadow: 0 8px 28px rgba(60,20,60,.18);
+    padding: 10px 12px; font-size: 13px; white-space: nowrap; opacity: 0; transition: opacity .1s; z-index: 2; font-variant-numeric: tabular-nums; }
+  .tip b { font-weight: 800; }
   .tip .m { color: var(--muted); }
   .tablewrap { overflow-x: auto; -webkit-overflow-scrolling: touch; }
-  table { border-collapse: collapse; width: 100%; font-size: 14px; font-variant-numeric: tabular-nums; }
-  th, td { text-align: left; padding: 9px 8px; border-bottom: 1px solid var(--line); white-space: nowrap; vertical-align: top; }
-  th { color: var(--muted); font-weight: 500; font-size: 13px; }
+  table { border-collapse: collapse; width: 100%; font-size: 13.5px; font-variant-numeric: tabular-nums; }
+  th, td { text-align: left; padding: 11px 5px; border-bottom: 1px solid var(--line); white-space: nowrap; vertical-align: top; }
+  th { color: var(--muted); font-weight: 700; font-size: 11.5px; letter-spacing: .08em; text-transform: uppercase; }
   .num { text-align: right; }
-  tfoot td { font-weight: 600; border-bottom: none; }
+  tfoot td { font-weight: 800; border-bottom: none; }
   .small { color: var(--muted); font-size: 12px; white-space: normal; }
-  .pill { display: inline-block; padding: 1px 9px; border-radius: 999px; border: 1px solid var(--line); font-size: 12px; }
-  .pill.done { color: var(--ok); border-color: var(--ok); }
-  .pill.wait { color: var(--warn); border-color: var(--warn); }
-  .pill.plan { color: var(--muted); }
-  details { color: var(--muted); font-size: 14px; }
-  details summary { cursor: pointer; color: var(--fg); }
-  details p { max-width: 70ch; margin: 8px 0; }
-  footer { color: var(--muted); font-size: 12px; margin-top: 40px; }
+  .pill { display: inline-block; padding: 3px 10px; border-radius: 99px; font-size: 11.5px; font-weight: 700; }
+  .pill.done { background: #E6F4EC; color: var(--ok); }
+  .pill.wait { background: #FDEBDD; color: var(--warn); }
+  .pill.plan { background: #F1ECF4; color: #6E2A9C; }
+  details { color: var(--muted); font-size: 14.5px; margin-top: 16px; }
+  details summary { cursor: pointer; color: var(--ink); font-weight: 700; }
+  details p { max-width: 760px; margin: 8px 0; }
+  footer { color: var(--muted); font-size: 12px; margin-top: 36px; }
 </style>
 </head>
 <body>
 <div class="wrap">
-  <h1>Реклама MAX-канала Антона Махина — ноябрь 2026</h1>
-  <p class="lede" id="lede"></p>
+  <div class="top">
+    <span class="pill-top">Новостройки Казани · MAX</span>
+    <div class="logo"><span>АМ</span></div>
+  </div>
+  <h1>Реклама канала Антона Махина</h1>
+  <p class="lede"><b>Ноябрь 2026: сколько подписчиков привела каждая реклама и почём.</b> <span id="lede"></span></p>
 
   <div class="tiles">
-    <div class="card"><p class="label">Бюджет на рекламу, ноябрь</p><p class="big" id="t-budget"></p><p class="note" id="t-budget-note"></p></div>
-    <div class="card"><p class="label">Подписчиков с рекламы</p><p class="big" id="t-subs"></p><p class="note">за дни вышедших размещений</p></div>
-    <div class="card"><p class="label">Цена подписчика</p><p class="big" id="t-cps"></p><p class="note">бюджет вышедших размещений ÷ подписки</p></div>
-    <div class="card"><p class="label">Подписчиков в канале</p><p class="big" id="t-total"></p><p class="note" id="t-total-note"></p></div>
+    <div class="card stat"><div class="big" id="t-budget"></div><p class="label">бюджет на рекламу</p><p class="note" id="t-budget-note"></p></div>
+    <div class="card stat"><div class="big" id="t-subs"></div><p class="label">подписчиков с рекламы</p><p class="note">за дни вышедших размещений</p></div>
+    <div class="card stat"><div class="big" id="t-cps"></div><p class="label">цена подписчика</p><p class="note">бюджет ÷ подписки</p></div>
+    <div class="card stat"><div class="big" id="t-total"></div><p class="label">подписчиков в канале</p><p class="note" id="t-total-note"></p></div>
   </div>
+  <div class="quote"><p id="q-text"></p><div class="who">Лучшая реклама ноября</div></div>
 
   <section>
     <h2>Подписки по дням</h2>
     <p class="sub" id="daily-sub"></p>
+    <div class="card">
     <div class="legend"><span><i class="sw"></i>Подписались</span><span><i class="swl"></i>Выход рекламы</span></div>
     <div class="chart" id="daily"></div>
     <ol class="key" id="key"></ol>
+    </div>
   </section>
 
   <section>
     <h2>Сколько стоил один подписчик</h2>
     <p class="sub">Стоимость размещения ÷ подписки за его окно. Меньше — лучше.</p>
-    <div class="chart" id="cps"></div>
+    <div class="card"><div class="chart" id="cps"></div></div>
   </section>
 
   <section>
     <h2>Все размещения</h2>
     <p class="sub">Окно — день выхода и все следующие дни до выхода следующей рекламы.</p>
-    <div class="tablewrap">
+    <div class="card tablewrap">
       <table>
         <thead><tr>
           <th>Выход</th><th>Площадка</th><th>Через кого</th><th class="num">Стоимость</th>
-          <th>Статус</th><th>Окно</th><th class="num">Подписок</th><th class="num">₽ за подписчика</th>
+          <th>Статус</th><th>Окно</th><th class="num">Подписок</th><th class="num">₽ / подп.</th>
         </tr></thead>
         <tbody id="rows"></tbody>
         <tfoot id="foot"></tfoot>
@@ -178,10 +202,11 @@ const winLabel = (r) => (!r.from ? "—" : r.from === r.to ? dm(r.from) : dm(r.f
 // ---- тексты ----
 const setText = (id, t) => { document.getElementById(id).textContent = t; };
 const lede = document.getElementById("lede");
-lede.textContent = `Вышли и уже посчитаны ${done.length} размещений из ${rows.length}: за ${rub(spent)} они привели ${n(subs)} подписчиков, по ${rub(cps)} за каждого.` +
-  (ranked.length ? ` Дешевле всех — ${ranked[0].placement} (${rub(ranked[0].cps)}), дороже всех — ${ranked[ranked.length - 1].placement} (${rub(ranked[ranked.length - 1].cps)}).` : "");
+lede.textContent = `Вышли и посчитаны ${done.length} размещений из ${rows.length}: за ${rub(spent)} они привели ${n(subs)} подписчиков, по ${rub(cps)} за каждого.` +
+  "";
+setText("q-text", ranked.length ? `${ranked[0].placement} — ${n(ranked[0].subs)} подписчиков за ${rub(ranked[0].cost)}, по ${rub(ranked[0].cps)} за каждого. Самая дорогая — ${ranked[ranked.length - 1].placement}: ${rub(ranked[ranked.length - 1].cps)} за подписчика.` : "Пока нет вышедших размещений со статистикой.");
 setText("t-budget", rub(budget));
-setText("t-budget-note", `${rows.length} размещений, из них вышло и посчитано на ${rub(spent)}`);
+setText("t-budget-note", `${rows.length} размещений, вышло на ${rub(spent)}`);
 setText("t-subs", n(subs));
 setText("t-cps", rub(cps));
 setText("t-total", n(TOTAL.subscribers));
@@ -234,6 +259,9 @@ function drawDaily() {
   const m = { t: 44, r: 6, b: 26, l: 34 };
   const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Подписки MAX-канала по дням ноября с отметками выхода рекламы" });
   box.appendChild(svg);
+  const defs = el("defs"); const lg = el("linearGradient", { id: "gbar", x1: "0", y1: "1", x2: "0", y2: "0" });
+  [["0%", "#F28C28"], ["55%", "#E0475B"], ["100%", "#6E2A9C"]].forEach(([o, c]) => lg.appendChild(el("stop", { offset: o, "stop-color": c })));
+  defs.appendChild(lg); svg.appendChild(defs);
   const max = Math.max(...days.map((d) => d.subs), 1);
   const niceMax = Math.ceil(max / 20) * 20;
   const y = (v) => H - m.b - (v / niceMax) * (H - m.t - m.b);
@@ -246,7 +274,7 @@ function drawDaily() {
   }
   const every = W < 480 ? 3 : 1;
   days.forEach((d, i) => {
-    svg.appendChild(el("rect", { x: x(i), y: y(d.subs), width: bw, height: Math.max(0, y(0) - y(d.subs)), rx: 2, fill: css("--accent") }));
+    svg.appendChild(el("rect", { x: x(i), y: y(d.subs), width: bw, height: Math.max(0, y(0) - y(d.subs)), rx: 4, fill: "url(#gbar)" }));
     if (i % every === 0) svg.appendChild(el("text", { x: x(i) + bw / 2, y: H - 8, "text-anchor": "middle" }, d.date.slice(8, 10)));
   });
   done.forEach((r, k) => {
@@ -254,8 +282,8 @@ function drawDaily() {
     if (i < 0) return;
     const xx = m.l + i * step;
     svg.appendChild(el("line", { x1: xx, x2: xx, y1: m.t - 6, y2: H - m.b, stroke: css("--ref"), "stroke-dasharray": "3 3" }));
-    svg.appendChild(el("circle", { cx: xx, cy: m.t - 18, r: 9, fill: css("--panel"), stroke: css("--ref") }));
-    svg.appendChild(el("text", { x: xx, y: m.t - 14, "text-anchor": "middle", style: "fill: var(--fg)" }, String(k + 1)));
+    svg.appendChild(el("circle", { cx: xx, cy: m.t - 18, r: 10, fill: "#0B0838" }));
+    svg.appendChild(el("text", { x: xx, y: m.t - 14, "text-anchor": "middle", style: "fill: #fff; font-weight: 800; font-size: 11px" }, String(k + 1)));
   });
   const tip = tipFor(box);
   days.forEach((d, i) => {
@@ -284,6 +312,9 @@ function drawCps() {
   const W = Math.max(300, box.clientWidth), rowH = 36, H = list.length * rowH + 6;
   const svg = el("svg", { viewBox: `0 0 ${W} ${H}`, role: "img", "aria-label": "Цена одного подписчика по каждому размещению" });
   box.appendChild(svg);
+  const defs = el("defs"); const lg = el("linearGradient", { id: "ghb", x1: "0", y1: "0", x2: "1", y2: "0" });
+  [["0%", "#F28C28"], ["55%", "#E0475B"], ["100%", "#6E2A9C"]].forEach(([o, c]) => lg.appendChild(el("stop", { offset: o, "stop-color": c })));
+  defs.appendChild(lg); svg.appendChild(defs);
   const probe = el("text", {}, "");
   svg.appendChild(probe);
   let lw = 0, vw = 0;
@@ -298,8 +329,8 @@ function drawCps() {
     const t = el("text", { x: 0, y: y0 + rowH / 2 + 2 }, r.placement);
     svg.appendChild(t);
     while (t.getComputedTextLength() > labelW - 10 && t.textContent.length > 4) t.textContent = t.textContent.slice(0, -2) + "…";
-    svg.appendChild(el("rect", { x: labelW, y: y0 + 7, width: Math.max(1, xs(r.cps) - labelW), height: rowH - 16, rx: 3, fill: css("--accent") }));
-    svg.appendChild(el("text", { x: xs(r.cps) + 6, y: y0 + rowH / 2 + 2, style: "fill: var(--fg)" }, rub(r.cps)));
+    svg.appendChild(el("rect", { x: labelW, y: y0 + 7, width: Math.max(1, xs(r.cps) - labelW), height: rowH - 14, rx: 8, fill: "url(#ghb)" }));
+    svg.appendChild(el("text", { x: xs(r.cps) + 6, y: y0 + rowH / 2 + 2, style: "fill: var(--ink); font-weight: 800" }, rub(r.cps)));
     const hit = el("rect", { x: 0, y: y0, width: W, height: rowH, fill: "transparent" });
     const show = (ev) => {
       tip.innerHTML = "";
@@ -320,7 +351,7 @@ function drawCps() {
 const key = document.getElementById("key");
 done.forEach((r, k) => {
   const li = document.createElement("li");
-  const b = document.createElement("b"); b.textContent = (k + 1) + ".";
+  const b = document.createElement("b"); b.textContent = String(k + 1);
   li.appendChild(b); li.appendChild(document.createTextNode(r.placement + " — " + dm(r.date)));
   key.appendChild(li);
 });
@@ -328,7 +359,6 @@ done.forEach((r, k) => {
 function drawAll() { drawDaily(); drawCps(); }
 drawAll();
 let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(drawAll, 150); });
-matchMedia("(prefers-color-scheme: dark)").addEventListener?.("change", drawAll);
 </script>
 </body>
 </html>
