@@ -182,7 +182,7 @@
       <div class="barlg"><span><i style="background:#fff"></i>Взнос</span><span><i style="background:#E0475B"></i>Кредит</span><span><i style="background:#9C6BC4"></i>Переплата</span></div>
       <div class="verdict" id="r-verdict"></div>
       <div class="cta">
-        <a class="btn main" href="https://t.me/AntonNovostroy1" target="_blank" rel="noopener">Подобрать квартиру под этот платёж</a>
+        <a class="btn main maxdm" href="https://web.max.ru" target="_blank" rel="noopener">Подобрать квартиру — написать в MAX</a>
         <a class="btn ghost" href="tel:+79874079909">Позвонить</a>
       </div>
     </div>
@@ -224,9 +224,10 @@
         <li>Опыт с 2018 года, офис в Казани</li>
       </ul>
       <div class="phone"><a href="tel:+79874079909">8 987 407-99-09</a></div>
+      <p class="maxhint" style="margin:6px 0 0;font-size:14px;opacity:.85">В MAX: <b>Антон Махин | 8 987 407-99-09</b> — найдите по номеру в поиске MAX</p>
       <div class="cta">
-        <a class="btn main" href="https://t.me/AntonNovostroy1" target="_blank" rel="noopener">Написать Антону</a>
-        <a class="btn light" href="https://t.me/anton_novostroy" target="_blank" rel="noopener">Канал о новостройках</a>
+        <a class="btn main maxdm" href="https://web.max.ru" target="_blank" rel="noopener">Написать Антону в личку MAX</a>
+        <a class="btn light" href="https://max.ru/join/qw-YDFwCp5jdrjxwTHNbKOuo81XDAmM8N7G9sgGiArk" target="_blank" rel="noopener">Канал о новостройках в MAX</a>
       </div>
     </div>
   </section>
@@ -376,6 +377,12 @@ document.querySelectorAll("#rate-chips .chip").forEach((c) => c.addEventListener
 document.querySelector("#rate-chips .chip").classList.add("sel");
 sync();
 let rt; window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(drawChart, 150); });
+document.querySelectorAll('.maxdm').forEach(a=>a.addEventListener('click',()=>{
+  try{navigator.clipboard.writeText('+79874079909');}catch(e){}
+  let tip=a.parentNode.querySelector('.maxtip');
+  if(!tip){tip=document.createElement('div');tip.className='maxtip';tip.style.cssText='flex-basis:100%;width:100%;font-size:13px;margin-top:8px;opacity:.9';a.parentNode.appendChild(tip);}
+  tip.innerHTML='Номер Антона скопирован ✅ В MAX откройте поиск → вставьте <b>+7 987 407-99-09</b> (Антон Махин) → напишите «Квартира»';
+}));
 </script>
 </body>
 </html>
